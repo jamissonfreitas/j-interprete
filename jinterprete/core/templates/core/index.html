@@ -1,25 +1,29 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block script %}
-<script src='{% static "js/load_image.js" %}' ></script>
-{% endblock script %}
-
 {% block header %}
-    <h1>Load Your Image</h1>
-    <p>We going to interprete for you.</p>
-    <!--<a href="#" class="btn btn-primary btn-lg">Choice Image</a>
-    <div>
-       <input id="input-b1" class="btn btn-primary btn-lg" name="input-b1" type="file" class="file">
-        <a href="/image_to_string" class="btn btn-primary btn-lg">Interprete</a>
-        <input type="submit" class="btn btn-info btn-lg" value="Submit Button">
-    </div>-->
 
-    <form method="POST" enctype="multipart/form-data" class="post-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary btn-lg">Interprete</button>
-    </form>
-    {{result}}
+    {% if reload %}
+        <div>
+            <div>
+               <img src="{{ image_path }}" alt="Loaded Image">
+            </div>
+            <div>
+                {{result}}
+            </div>
+            <div>
+                <a href="{% url 'index' %}" class="btn btn-primary btn-lg">Tentar novamente</a>
+            </div>
+        </div>
+    {% else %}
+        <h1>Load Your Image</h1>
+        <p>We going to interprete for you.</p>
+        <form method="POST" enctype="multipart/form-data" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-lg">Interprete</button>
+        </form>
+    {% endif %}
+
 {% endblock header %}
 
